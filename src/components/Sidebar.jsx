@@ -41,9 +41,9 @@ function Sidebar({ role, activeTab, setActiveTab, onOpenLogin, onOpenPush }) {
       </nav>
 
       <div className="sidebar-footer">
-        <button className="settings-btn" onClick={onOpenPush} aria-label="Push Notifications">
+        <button className="settings-btn" onClick={onOpenPush} aria-label="Subscriptions">
           <i className="fa-solid fa-bell"></i>
-          <span>Alerts</span>
+          <span>Subscriptions</span>
         </button>
         <div className="user-profile" onClick={onOpenLogin}>
           <img 

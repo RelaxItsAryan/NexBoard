@@ -7,31 +7,50 @@ function formatDate(isoString) {
 
 function NoticeCard({ notice, onClick }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
   const isExpired = new Date(notice.expiry) < new Date();
   
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+    
+    setMousePos({ x, y });
+    setRotation({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseEnter = () => setIsHovered(true);
+  
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setRotation({ x: 0, y: 0 });
   };
 
   const bgStyle = notice.attachment ? {
-    background: `linear-gradient(rgba(10,10,12,0.95), rgba(10,10,12,0.85)), url('${notice.attachment}') center/cover`
+    background: `linear-gradient(rgba(10,10,12,0.9), rgba(10,10,12,0.7)), url('${notice.attachment}') center/cover`
   } : {};
 
   return (
-    <article 
-      className="notice-card" 
-      onClick={() => onClick(notice)} 
-      onMouseMove={handleMouseMove}
-      style={{
-        ...bgStyle,
-        '--mouse-x': `${mousePos.x}px`,
-        '--mouse-y': `${mousePos.y}px`
-      }}
-    >
+    <div style={{ perspective: '1000px' }} className="notice-card-wrapper">
+      <article 
+        className={`notice-card ${isHovered ? 'hovered' : ''}`} 
+        onClick={() => onClick(notice)} 
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          ...bgStyle,
+          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+          '--mouse-x': `${mousePos.x}px`,
+          '--mouse-y': `${mousePos.y}px`
+        }}
+      >
       <div className="card-header">
         <div className="badges">
           <span className={`badge urgency-${notice.urgency.toLowerCase()}`}>{notice.urgency}</span>
@@ -61,7 +80,8 @@ function NoticeCard({ notice, onClick }) {
         )}
       </div>
       <div className="card-glow"></div>
-    </article>
+      </article>
+    </div>
   );
 }
 

@@ -8,8 +8,9 @@ export const DUMMY_NOTICES = [
         urgency: 'Urgent',
         desc: 'Due to unforeseen circumstances, the final exams scheduled for next week have been postponed by two days. Please check the updated schedule attached.',
         expiry: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-        attachment: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&q=80&w=400',
-        datePosted: new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString()
+        attachment: '/academic.png',
+        datePosted: new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString(),
+        isPinned: true
     },
     {
         id: 'n_2',
@@ -28,7 +29,7 @@ export const DUMMY_NOTICES = [
         urgency: 'Normal',
         desc: 'Join the biggest tech fest of the year! Participate in hackathons, robotics, and coding challenges. Win prizes up to ₹1,000,000.',
         expiry: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-        attachment: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400',
+        attachment: '/events.png',
         datePosted: new Date().toISOString()
     },
     {
@@ -39,7 +40,8 @@ export const DUMMY_NOTICES = [
         desc: 'Scheduled maintenance will cause a power outage in Boys Hostel A from 2PM to 5PM tomorrow. Please plan accordingly.',
         expiry: new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toISOString(),
         attachment: null,
-        datePosted: new Date().toISOString()
+        datePosted: new Date().toISOString(),
+        isPinned: true
     },
     {
         id: 'n_5',

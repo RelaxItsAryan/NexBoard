@@ -79,7 +79,23 @@ function App() {
   };
 
   const handleCreateNotice = (newNotice) => {
-    setNotices((prev) => [...prev, newNotice]);
+    setNotices((prev) => {
+      let updatedNotices = [...prev];
+      if (newNotice.isPinned) {
+         // Gather all active pinned notices
+         const activePinned = updatedNotices.filter(n => n.isPinned && new Date(n.expiry) >= new Date());
+         if (activePinned.length >= 3) {
+           // sort by oldest posted date
+           activePinned.sort((a,b) => new Date(a.datePosted) - new Date(b.datePosted));
+           // unpin the oldest ones so only 2 remain (making room for the new 1)
+           const overLimitCount = activePinned.length - 2;
+           const oldestToUnpin = activePinned.slice(0, overLimitCount);
+           const idsToUnpin = oldestToUnpin.map(n => n.id);
+           updatedNotices = updatedNotices.map(n => idsToUnpin.includes(n.id) ? { ...n, isPinned: false } : n);
+         }
+      }
+      return [...updatedNotices, newNotice];
+    });
     showToast('Success', 'Notice broadcasted successfully.', 'success');
     
     // Simulate push

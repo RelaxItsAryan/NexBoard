@@ -48,7 +48,7 @@ function PushModal({ onClose, subscriptions, setSubscriptions, pushEnabled, setP
       <div className="modal-content glass-panel" style={{ animation: 'modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
         <button className="modal-close" onClick={onClose}><i className="fa-solid fa-xmark"></i></button>
         <div className="modal-header">
-          <h3><i className="fa-solid fa-bell text-accent"></i> Push Alerts</h3>
+          <h3><i className="fa-solid fa-bell text-accent"></i> Subscriptions</h3>
           <p>Subscribe to categories to receive instant browser notifications.</p>
         </div>
         

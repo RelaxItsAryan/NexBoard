@@ -18,7 +18,7 @@ function NoticeFeed({ notices, onOpenDetail }) {
     const pinned = [];
     const remaining = [];
     allActive.forEach(n => {
-      if ((n.urgency === 'Urgent' || n.urgency === 'Important') && pinned.length < 3) {
+      if (n.isPinned) {
         pinned.push(n);
       } else {
         remaining.push(n);

@@ -8,7 +8,8 @@ function AdminDashboard({ onCreateNotice }) {
     category: 'Academic',
     urgency: 'Normal',
     expiry: '',
-    desc: ''
+    desc: '',
+    isPinned: false
   });
   const [file, setFile] = useState(null);
 
@@ -37,8 +38,11 @@ function AdminDashboard({ onCreateNotice }) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
+    }));
   };
 
   const handleFileDrop = (e) => {
@@ -111,6 +115,24 @@ function AdminDashboard({ onCreateNotice }) {
               value={formData.desc} 
               onChange={handleChange} 
             ></textarea>
+          </div>
+
+          <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)' }}>
+            <div>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.2rem', color: 'var(--text-primary)' }}>
+                <i className="fa-solid fa-thumbtack text-accent"></i> Pin this Notice
+              </label>
+              <span className="text-muted" style={{ fontSize: '0.85rem' }}>Pinned notices stay at the top. Max 3 allowed.</span>
+            </div>
+            <label className="toggle-switch">
+              <input 
+                type="checkbox" 
+                name="isPinned" 
+                checked={formData.isPinned} 
+                onChange={handleChange} 
+              />
+              <span className="slider"></span>
+            </label>
           </div>
 
           <div className="form-group file-upload-wrapper">
